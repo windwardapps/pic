@@ -6,15 +6,20 @@ import axios from 'axios'
 class Login extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    msg: null
   }
 
   submit = async (e: Event) => {
     try {
+      this.setState({ msg: null })
       e.preventDefault()
       e.stopPropagation()
       const { email, password } = this.state
-      await axios.post('/login/', { email, password })
+      const res = await axios.post('/login/', { email, password })
+      if (!res.data.success) {
+        throw new Error('Invalid')
+      }
       window.location.reload()
     } catch (err) {
       this.setState({ msg: 'Invalid email/password.' })
@@ -22,13 +27,14 @@ class Login extends Component {
   }
 
   render() {
-    const { email, password } = this.state
+    const { email, password, msg } = this.state
 
     return (
       <div className="Login">
         <div className="form-wrapper">
           <form onSubmit={this.submit}>
             <h3>Login</h3>
+            {msg ? <p>{msg}</p> : null}
             <div className="formfield">
               <input
                 type="text"

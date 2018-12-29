@@ -8,7 +8,14 @@ _updatedAt = models.DateTimeField(auto_now=True)
 
 
 class User(AbstractUser):
-    pass
+
+    def data(self):
+        return {
+            'email': self.email,
+            'username': self.username,
+            'firstName': self.first_name,
+            'lastName': self.last_name,
+        }
 
 
 class Shoot(models.Model):

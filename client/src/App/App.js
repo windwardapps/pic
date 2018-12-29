@@ -16,7 +16,11 @@ class App extends Component {
 
   async componentDidMount() {
     const res = await axios.get('/login/')
-    this.setState({ loggedIn: res.data.success, user: res.data.user, loading: false })
+    const { success, user, token } = res.data
+    if (success) {
+      axios.defaults.headers.common['X-CSRFToken'] = token
+    }
+    this.setState({ loggedIn: success, user, loading: false })
   }
 
   render() {

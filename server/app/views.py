@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import Group
 from django.http import JsonResponse
+from django.middleware.csrf import get_token
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,25 +9,27 @@ from .models import User, Shoot, Student, Image
 from .serializers import UserSerializer, GroupSerializer, StudentSerializer, ShootSerializer, ImageSerializer
 
 
+def login_response(request, user):
+    token = get_token(request)
+    return Response({'success': True, 'user': user.data(), 'token': token})
+
+
 class LoginView(APIView):
     def get(self, request):
         if not request.user.is_authenticated:
             return Response({'success': False})
 
-        return Response({'success': True, 'user': request.user})
+        return login_response(request, request.user)
 
     def post(self, request):
         email = request.data['email']
         password = request.data['password']
         user = authenticate(request, username=email, password=password)
         if user is None:
-            print('***** user is None')
             return Response({'success': False})
 
-        print('***** user: ', user)
         login(request, user)
-        print('***** logged in')
-        return Response({'success': True, 'user': request.user})
+        return login_response(request, user)
 
 
 class UserViewSet(viewsets.ModelViewSet):
