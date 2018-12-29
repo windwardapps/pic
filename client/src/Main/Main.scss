@@ -1,0 +1,21 @@
+.Main {
+  display: flex;
+  height: calc(100% - 55px);
+  & > .sidebar {
+    flex: 0 0 250px;
+    background: #1d1d1d;
+    a {
+      color: #eee;
+      display: block;
+      padding: 10px 20px;
+      text-decoration: none;
+      &:hover {
+        text-decoration: none;
+        background: #272727;
+      }
+    }
+  }
+  & > .content {
+    flex: 1 1 80%;
+  }
+}
