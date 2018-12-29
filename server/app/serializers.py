@@ -19,16 +19,16 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class ShootSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Shoot
-        fields = ('url', 'name')
+        fields = ('id', 'url', 'name')
 
 
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Student
-        fields = ('url', 'firstName', 'lastName', 'shoot')
+        fields = ('id', 'url', 'firstName', 'lastName', 'shoot')
 
 
 class ImageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Image
-        fields = ('url', 'path', 'shoot')
+        fields = ('id', 'url', 'path', 'shoot')

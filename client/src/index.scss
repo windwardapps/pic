@@ -18,3 +18,108 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.screen {
+  & > .header {
+    padding: 20px;
+  }
+  & > .content {
+    padding: 20px;
+  }
+  & > .list {
+    .item {
+      display: block;
+      padding: 25px 10px;
+      border-top: 1px solid #0000;
+      color: #eee;
+      text-decoration: none;
+      &:hover {
+        text-decoration: none;
+        background: #272727;
+      }
+      & + .item {
+        border-top: 1px solid #272727;
+      }
+    }
+  }
+}
+
+button, .btn {
+  appearance: none;
+  border: 2px solid #555;
+  color: #bbb;
+  background: #0000;
+  padding: 10px 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 100ms;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: inline-block;
+  &:hover {
+    text-decoration: none;
+    color: #ddd;
+    border-color: #666;
+  }
+  &:active, &:focus {
+    color: #fff;
+    border-color: #777;
+    outline: none;
+  }
+  &:disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+  &.sm {
+    padding: 7px 17px;
+    font-size: 12px;
+  }
+}
+
+.formfield {
+  margin-bottom: 15px;
+  label {
+    margin-right: 20px;
+  }
+  button {
+    margin-left: 20px;
+  }
+}
+input[type="text"] {
+  appearance: none;
+  border: 2px solid #555;
+  color: #ccc;
+  background: #0000;
+  padding: 10px;
+  font-size: 16px; 
+  border-radius: 2px;
+  &:active, &:focus {
+    border-color: #777;
+    outline: none;
+  }
+  &.sm {
+    padding: 7px 17px;
+    font-size: 14px;
+  }
+}
+
+.card {
+  border-radius: 3px;
+  border: 1px solid #666;
+  display: inline-block;
+  min-width: 200px;
+  transition: border-color 100ms;
+  &:hover {
+    border-color: #888;
+  }
+  header {
+    padding: 20px;
+    min-height: 50px;
+    border-bottom: 1px solid #666;
+  }
+  section {
+    padding: 20px;
+    min-height: 100px;
+  }
+}
