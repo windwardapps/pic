@@ -45,7 +45,7 @@ class ShootDetail extends Component {
       <div className="ShootDetail screen">
         <div className="header">
           <Link className="muted" to="/shoots">
-            Back
+            ‹ Back
           </Link>
           <h3>{shoot.name}</h3>
         </div>

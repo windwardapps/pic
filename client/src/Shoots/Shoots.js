@@ -48,8 +48,8 @@ class Shoots extends Component {
             render={() => (
               <Fragment key="new">
                 <div className="header">
-                  <Link to={match.url} className="btn">
-                    Back
+                  <Link className="muted" to={match.url}>
+                    ‹ Back
                   </Link>
                 </div>
                 <div className="content">
