@@ -1,6 +1,7 @@
-import './Shoots.scss'
+import './ShootDetail.scss'
 
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 class ShootDetail extends Component {
@@ -42,8 +43,12 @@ class ShootDetail extends Component {
 
     return (
       <div className="ShootDetail screen">
-        {JSON.stringify(shoot)}
-        <div className="header">{shoot.name}</div>
+        <div className="header">
+          <Link className="muted" to="/shoots">
+            Back
+          </Link>
+          <h3>{shoot.name}</h3>
+        </div>
         <div className="content">
           <div className="card students">
             <header>Students</header>

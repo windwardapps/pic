@@ -19,6 +19,27 @@ code {
     monospace;
 }
 
+a {
+  color: #d5d5d5;
+  text-decoration: none;
+  &:hover {
+    color: #e7e7e7;
+    text-decoration: none;
+  }
+  &.active {
+    color: #fff;
+  }
+  &.muted {
+    color: #777;
+    &:hover {
+      color: #888;
+    }
+    &.active {
+      color: #999;
+    }
+  }
+}
+
 .screen {
   & > .header {
     padding: 20px;
@@ -31,10 +52,7 @@ code {
       display: block;
       padding: 25px 10px;
       border-top: 1px solid #0000;
-      color: #eee;
-      text-decoration: none;
       &:hover {
-        text-decoration: none;
         background: #272727;
       }
       & + .item {
@@ -70,6 +88,10 @@ button, .btn {
   &:disabled {
     cursor: default;
     opacity: 0.7;
+    &:hover {
+      border-color: #555;
+      color: #bbb;
+    }
   }
   &.sm {
     padding: 7px 17px;
