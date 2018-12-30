@@ -1,14 +1,14 @@
 import './Nav.scss'
 
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 class Nav extends Component {
   render() {
     return (
-      <div className="Nav">
+      <Fragment>
         <div>logo</div>
         <div>...</div>
-      </div>
+      </Fragment>
     )
   }
 }

@@ -3,6 +3,7 @@ import './Shoots.scss'
 import React, { Component, Fragment } from 'react'
 import { Link, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
+import moment from 'moment'
 import ShootDetail from './ShootDetail'
 
 class Shoots extends Component {
@@ -20,11 +21,11 @@ class Shoots extends Component {
   render() {
     const { shoots, match } = this.props
     return (
-      <div className="Shoots screen">
+      <div className="Shoots content-wrapper">
         <Switch>
           <Route
             exact
-            path={match.path}
+            path="/shoots"
             render={() => (
               <Fragment>
                 <div className="header">
@@ -35,7 +36,8 @@ class Shoots extends Component {
                 <div className="content list">
                   {shoots.map(shoot => (
                     <Link key={shoot.id} className="item" to={`${match.url}/${shoot.id}`}>
-                      {shoot.name}
+                      <span className="name">{shoot.name}</span>
+                      <span className="info">{moment(shoot.updatedAt).fromNow()}</span>
                     </Link>
                   ))}
                 </div>
@@ -44,7 +46,7 @@ class Shoots extends Component {
           />
           <Route
             exact
-            path={`${match.path}/new`}
+            path="/shoots/new"
             render={() => (
               <Fragment key="new">
                 <div className="header">
@@ -72,7 +74,6 @@ class Shoots extends Component {
             )}
           />
           <Route
-            exact
             path={`${match.path}/:shootId`}
             render={props => (
               <ShootDetail

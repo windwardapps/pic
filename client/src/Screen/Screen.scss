@@ -1,0 +1,38 @@
+.Screen {
+  height: 100%;
+  & > .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 55px;
+    background: #272727;
+    color: #eee;
+    padding: 0 20px;
+    h3 {
+      margin: 0 0 0 20px;
+      padding: 0;
+    }
+  }
+  & > .body {
+    display: flex;
+    height: calc(100% - 55px);
+    & > .sidebar {
+      flex: 0 0 250px;
+      background: #1d1d1d;
+      a {
+        display: block;
+        padding: 10px 20px;
+        &:hover {
+          background: #272727;
+        }
+        &.active {
+          background: #333;
+        }
+      }
+    }
+    & > .content {
+      flex: 1 1 80%;
+      overflow-y: auto;
+    }
+  }
+}

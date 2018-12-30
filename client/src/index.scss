@@ -44,7 +44,7 @@ a {
   }
 }
 
-.screen {
+.content-wrapper {
   & > .header {
     padding: 20px;
   }
@@ -56,6 +56,12 @@ a {
       display: block;
       padding: 25px 10px;
       border-top: 1px solid #0000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .info {
+        color: #777;
+      }
       &:hover {
         background: #272727;
       }
@@ -120,8 +126,9 @@ input[type="password"] {
   color: #ccc;
   background: #0000;
   padding: 10px;
-  font-size: 16px; 
+  font-size: 16px;
   border-radius: 2px;
+  min-width: 250px;
   &:active, &:focus {
     border-color: #777;
     outline: none;
@@ -151,3 +158,23 @@ input[type="password"] {
     min-height: 100px;
   }
 }
+
+.flex-row {
+  display: flex;
+}
+.align-center {
+  align-items: center;
+}
+
+form {
+  label {
+    min-width: 150px;
+    display: inline-block;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+

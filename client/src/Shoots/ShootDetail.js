@@ -1,8 +1,12 @@
 import './ShootDetail.scss'
 
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component, Fragment } from 'react'
+import { Route, Switch, Link, NavLink } from 'react-router-dom'
 import axios from 'axios'
+import Screen from '../Screen/Screen'
+import Portal from '../Portal/Portal'
+import Students from '../Students/Students'
+import Settings from './Settings/Settings'
 
 class ShootDetail extends Component {
   state = {
@@ -23,8 +27,8 @@ class ShootDetail extends Component {
 
   fetchStudents = async () => {
     const { id } = this.props.shoot
-    const res = await axios.get(`/shoots/${id}/students`)
-    this.setState({ students: res.data })
+    const res = await axios.get(`/shoots/${id}/students/`)
+    this.setState({ students: res.data.results })
   }
 
   submit = async () => {
@@ -34,7 +38,7 @@ class ShootDetail extends Component {
   }
 
   render() {
-    const { shoot } = this.props
+    const { shoot, match } = this.props
     const { students } = this.state
 
     if (!shoot) {
@@ -42,24 +46,36 @@ class ShootDetail extends Component {
     }
 
     return (
-      <div className="ShootDetail screen">
-        <div className="header">
-          <Link className="muted" to="/shoots">
-            ‹ Back
-          </Link>
-          <h3>{shoot.name}</h3>
-        </div>
-        <div className="content">
-          <div className="card students">
-            <header>Students</header>
-            <section>
-              {students.map(s => (
-                <div key={s.id}>{`${s.firstName} ${s.lastName}`}</div>
-              ))}
-            </section>
-          </div>
-        </div>
-      </div>
+      <Portal>
+        <Screen>
+          <Fragment>
+            <div className="flex-row align-center">
+              <Link className="muted" to="/shoots">
+                ‹ Back
+              </Link>
+              <h3>{shoot.name}</h3>
+            </div>
+          </Fragment>
+          <Fragment>
+            <div className="sidebar students">
+              <NavLink to={`${match.url}/settings`}>Settings</NavLink>
+              <NavLink to={`${match.url}/students`}>Students</NavLink>
+            </div>
+            <div className="content">
+              <Switch>
+                <Route
+                  path={`${match.path}/settings`}
+                  render={props => <Settings {...props} shoot={shoot} />}
+                />
+                <Route
+                  path={`${match.path}/students`}
+                  render={props => <Students {...props} shoot={shoot} students={students} />}
+                />
+              </Switch>
+            </div>
+          </Fragment>
+        </Screen>
+      </Portal>
     )
   }
 }

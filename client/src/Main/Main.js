@@ -1,48 +1,36 @@
 import './Main.scss'
 
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Route, Switch, NavLink } from 'react-router-dom'
 import axios from 'axios'
 import Shoots from '../Shoots/Shoots'
-import Students from '../Students/Students'
-import Images from '../Images/Images'
 
 class Main extends Component {
   state = {
-    students: [],
-    shoots: [],
-    images: []
+    shoots: []
   }
 
   async componentDidMount() {
-    const res1 = await axios.get('/students/')
-    const res2 = await axios.get('/shoots/')
-    const res3 = await axios.get('/images/')
+    const res = await axios.get('/shoots/')
 
     this.setState({
-      students: res1.data.results,
-      shoots: res2.data.results,
-      images: res3.data.results
+      shoots: res.data.results
     })
   }
 
   render() {
-    const { shoots, students, images } = this.state
+    const { shoots } = this.state
     return (
-      <div className="Main">
+      <Fragment>
         <div className="sidebar">
           <NavLink to="/shoots">Shoots</NavLink>
-          <NavLink to="/students">Students</NavLink>
-          <NavLink to="/images">Images</NavLink>
         </div>
         <div className="content">
           <Switch>
             <Route path="/shoots" render={props => <Shoots {...props} shoots={shoots} />} />
-            <Route path="/students" render={props => <Students {...props} students={students} />} />
-            <Route path="/images" render={props => <Images {...props} images={images} />} />
           </Switch>
         </div>
-      </div>
+      </Fragment>
     )
   }
 }

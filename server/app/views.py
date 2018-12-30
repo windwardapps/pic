@@ -49,15 +49,43 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 class StudentViewSet(viewsets.ModelViewSet):
-    queryset = Student.objects.all()
     serializer_class = StudentSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        shoot_pk = self.kwargs['shoot_pk']
+        return Student.objects.filter(shoot_id=shoot_pk)
+
+    def perform_create(self, serializer):
+        shoot_pk = self.kwargs['shoot_pk']
+        serializer.save(shoot_id=shoot_pk)
 
 
 class ShootViewSet(viewsets.ModelViewSet):
-    queryset = Shoot.objects.all()
     serializer_class = ShootSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        return Shoot.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class ImageViewSet(viewsets.ModelViewSet):
-    queryset = Image.objects.all()
     serializer_class = ImageSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        print('***** kwargs: ', self.kwargs)
+        student_pk = self.kwargs['student_pk']
+        return Image.objects.filter(student_id=student_pk)

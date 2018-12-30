@@ -7,7 +7,7 @@ from .models import User, Shoot, Student, Image
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups')
+        fields = ('id', 'url', 'username', 'email', 'groups')
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -19,13 +19,13 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class ShootSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Shoot
-        fields = ('id', 'url', 'name')
+        fields = ('id', 'url', 'name', 'updatedAt')
 
 
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Student
-        fields = ('id', 'url', 'firstName', 'lastName', 'shoot')
+        fields = ('id', 'url', 'firstName', 'lastName')
 
 
 class ImageSerializer(serializers.HyperlinkedModelSerializer):

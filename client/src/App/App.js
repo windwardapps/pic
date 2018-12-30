@@ -1,11 +1,12 @@
 import './App.scss'
 
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import axios from 'axios'
 import Nav from '../Nav/Nav'
 import Main from '../Main/Main'
 import Login from '../Login/Login'
+import Screen from '../Screen/Screen'
 
 class App extends Component {
   state = {
@@ -18,6 +19,7 @@ class App extends Component {
     const res = await axios.get('/login/')
     const { success, user, token } = res.data
     if (success) {
+      window.__user = user
       axios.defaults.headers.common['X-CSRFToken'] = token
     }
     this.setState({ loggedIn: success, user, loading: false })
@@ -34,10 +36,10 @@ class App extends Component {
           ) : !loggedIn ? (
             <Login />
           ) : (
-            <Fragment>
+            <Screen>
               <Nav user={user} />
               <Main />
-            </Fragment>
+            </Screen>
           )}
         </div>
       </BrowserRouter>
