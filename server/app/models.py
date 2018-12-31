@@ -7,6 +7,14 @@ _updatedBy = models.CharField(max_length=50, null=True, blank=True)
 _updatedAt = models.DateTimeField(auto_now=True)
 
 
+def logo_path(instance, filename):
+    return 'user_{0}/logo/{1}'.format(instance.user.id, filename)
+
+
+def watermark_path(instance, filename):
+    return 'user_{0}/watermark/{1}'.format(instance.user.id, filename)
+
+
 class User(AbstractUser):
 
     def data(self):
@@ -17,6 +25,39 @@ class User(AbstractUser):
             'firstName': self.first_name,
             'lastName': self.last_name,
         }
+
+
+class Brand(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    companyName = models.CharField(max_length=200)
+    logoFile = models.FileField(upload_to=logo_path, null=True, blank=True)
+    watermarkFile = models.FileField(
+        upload_to=watermark_path, null=True, blank=True)
+    createdBy = _createdBy
+    createdAt = _createdAt
+    updatedBy = _updatedBy
+    updatedAt = _updatedAt
+
+    def data(self):
+        logoFile = ''
+        watermarkFile = ''
+        try:
+            logoFile = self.logoFile.url
+        except ValueError:
+            pass
+        try:
+            watermarkFile = self.watermarkFile.url
+        except ValueError:
+            pass
+        return {
+            'id': self.id,
+            'companyName': self.companyName,
+            'logoFile': logoFile,
+            'watermarkFile': watermarkFile
+        }
+
+    def __str__(self):
+        return self.companyName
 
 
 class Shoot(models.Model):

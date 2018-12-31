@@ -2,10 +2,12 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import Group
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
-from rest_framework import viewsets
+from django.views.generic import View
+from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import User, Shoot, Student, Image
+from .forms import BrandForm
+from .models import User, Shoot, Student, Image, Brand
 from .serializers import UserSerializer, GroupSerializer, StudentSerializer, ShootSerializer, ImageSerializer
 
 
@@ -30,6 +32,26 @@ class LoginView(APIView):
 
         login(request, user)
         return login_response(request, user)
+
+
+class BrandingView(View):
+
+    def get(self, request):
+        try:
+            brand = Brand.objects.get(user=request.user)
+        except Brand.DoesNotExist:
+            return JsonResponse({})
+
+        return JsonResponse(brand.data())
+
+    def post(self, request):
+        brand, created = Brand.objects.get_or_create(user=request.user)
+        form = BrandForm(request.POST, request.FILES, instance=brand)
+        if form.is_valid():
+            # file is saved
+            form.save()
+
+        return JsonResponse(brand.data())
 
 
 class UserViewSet(viewsets.ModelViewSet):
