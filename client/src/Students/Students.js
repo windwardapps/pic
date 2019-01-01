@@ -111,7 +111,7 @@ class Students extends Component {
                         }
                         onClick={this.submit}
                       >
-                        Create
+                        Save
                       </button>
                     </div>
                   </form>

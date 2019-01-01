@@ -65,7 +65,7 @@ class Shoots extends Component {
                         autoFocus
                       />
                       <button disabled={!this.state.value.trim()} onClick={this.submit}>
-                        Create
+                        Save
                       </button>
                     </div>
                   </form>

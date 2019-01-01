@@ -8,6 +8,9 @@ class Portal extends Component {
     super(props)
     this.div = document.createElement('div')
     this.div.className = 'Portal'
+    if (props.plain) {
+      this.div.className = 'Portal plain'
+    }
   }
 
   componentDidMount() {

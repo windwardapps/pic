@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from rest_framework import serializers
-from .models import User, Shoot, Student, Image
+from .models import User, Shoot, Student, Image, Share
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -25,10 +25,16 @@ class ShootSerializer(serializers.HyperlinkedModelSerializer):
 class StudentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Student
-        fields = ('id', 'url', 'firstName', 'lastName')
+        fields = ('id', 'url', 'firstName', 'lastName', 'updatedAt')
 
 
-class ImageSerializer(serializers.HyperlinkedModelSerializer):
+class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ('id', 'url', 'path', 'shoot')
+        fields = ('id', 'file', 'updatedAt')
+
+
+class ShareSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Share
+        fields = ('id', 'url', 'expiresAt')

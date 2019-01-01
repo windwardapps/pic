@@ -1,0 +1,10 @@
+.Share {
+  .cal-wrapper {
+    position: relative;
+    .react-calendar {
+      position: absolute;
+      top: 40px;
+      left: 0;
+    }
+  }
+}

@@ -7,14 +7,6 @@ _updatedBy = models.CharField(max_length=50, null=True, blank=True)
 _updatedAt = models.DateTimeField(auto_now=True)
 
 
-def logo_path(instance, filename):
-    return 'user_{0}/logo/{1}'.format(instance.user.id, filename)
-
-
-def watermark_path(instance, filename):
-    return 'user_{0}/watermark/{1}'.format(instance.user.id, filename)
-
-
 class User(AbstractUser):
 
     def data(self):
@@ -25,6 +17,14 @@ class User(AbstractUser):
             'firstName': self.first_name,
             'lastName': self.last_name,
         }
+
+
+def logo_path(instance, filename):
+    return 'user_{0}/logo/{1}'.format(instance.user.id, filename)
+
+
+def watermark_path(instance, filename):
+    return 'user_{0}/watermark/{1}'.format(instance.user.id, filename)
 
 
 class Brand(models.Model):
@@ -91,9 +91,13 @@ class Student(models.Model):
         return '{} {}'.format(self.firstName, self.lastName)
 
 
+def shoot_path(instance, filename):
+    return 'user_{}/shoot_{}/student_{}/{}'.format(instance.student.shoot.user.id, instance.student.shoot.id, instance.student.id, filename)
+
+
 class Image(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    path = models.CharField(max_length=500)
+    file = models.FileField(upload_to=shoot_path, null=True, blank=True)
     createdBy = _createdBy
     createdAt = _createdAt
     updatedBy = _updatedBy
@@ -104,3 +108,19 @@ class Image(models.Model):
 
     def __str__(self):
         return self.path
+
+
+class Share(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    url = models.URLField(null=True, blank=True)
+    expiresAt = models.DateTimeField(null=True, blank=True)
+    createdBy = _createdBy
+    createdAt = _createdAt
+    updatedBy = _updatedBy
+    updatedAt = _updatedAt
+
+    class Meta:
+        ordering = ('-updatedAt',)
+
+    def __str__(self):
+        return 'Student {} url share'.format(self.student)

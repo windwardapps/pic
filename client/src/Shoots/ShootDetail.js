@@ -1,7 +1,7 @@
 import './ShootDetail.scss'
 
 import React, { Component, Fragment } from 'react'
-import { Route, Switch, Link, NavLink } from 'react-router-dom'
+import { Route, Switch, Link, NavLink, Redirect } from 'react-router-dom'
 import axios from 'axios'
 import Screen from '../Screen/Screen'
 import Portal from '../Portal/Portal'
@@ -50,10 +50,13 @@ class ShootDetail extends Component {
         <Screen>
           <Fragment>
             <div className="flex-row align-center">
-              <Link className="muted" to="/shoots">
-                ‹ Back
-              </Link>
-              <h3>{shoot.name}</h3>
+              <h3>
+                <Link className="muted" to="/shoots">
+                  Home
+                </Link>
+                <span>/</span>
+                {shoot.name}
+              </h3>
             </div>
           </Fragment>
           <Fragment>
@@ -70,6 +73,11 @@ class ShootDetail extends Component {
                 <Route
                   path={`${match.path}/students`}
                   render={props => <Students {...props} shoot={shoot} students={students} />}
+                />
+                <Route
+                  exact
+                  path={match.path}
+                  render={() => <Redirect to={`${match.url}/settings`} />}
                 />
               </Switch>
             </div>

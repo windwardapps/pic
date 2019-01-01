@@ -113,14 +113,15 @@ button, .btn {
   margin-bottom: 15px;
   display: flex;
   align-items: center;
-  label {
+  & > label {
     margin-right: 20px;
   }
-  button {
+  & > button {
     margin-left: 20px;
   }
 }
 input[type="text"],
+input[type="date"],
 input[type="email"],
 input[type="password"] {
   appearance: none;
@@ -177,6 +178,14 @@ form {
     min-width: 150px;
     display: inline-block;
   }
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 @keyframes fade-in {

@@ -6,7 +6,7 @@ class Nav extends Component {
   render() {
     return (
       <Fragment>
-        <div>logo</div>
+        <h3>Home</h3>
         <div>...</div>
       </Fragment>
     )

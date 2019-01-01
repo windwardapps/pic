@@ -9,8 +9,15 @@
     color: #eee;
     padding: 0 20px;
     h3 {
-      margin: 0 0 0 20px;
+      margin: 0;
       padding: 0;
+      display: flex;
+      align-items: center;
+      font-weight: normal;
+      & > span {
+        margin: 0 10px;
+        color: #777;
+      }
     }
   }
   & > .body {
