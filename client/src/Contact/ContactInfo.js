@@ -33,7 +33,7 @@ class ContactInfo extends Component {
 
   getUrl = () => {
     const { shoot, student } = this.props
-    return `/shoots/${shoot.id}/students/${student.id}`
+    return `/shoots/${shoot.id}/students/${student.id}/`
   }
 
   submit = () => {
@@ -57,7 +57,7 @@ class ContactInfo extends Component {
   }
 
   render() {
-    const { firstName, saveState } = this.state
+    const { firstName, lastName, email, phone, saveState } = this.state
 
     return (
       <div className="ContactInfo content-wrapper">
@@ -69,6 +69,30 @@ class ContactInfo extends Component {
                 type="text"
                 value={firstName}
                 onChange={e => this.setState({ firstName: e.target.value })}
+              />
+            </div>
+            <div className="formfield">
+              <label>Last Name:</label>
+              <input
+                type="text"
+                value={lastName}
+                onChange={e => this.setState({ lastName: e.target.value })}
+              />
+            </div>
+            <div className="formfield">
+              <label>Email:</label>
+              <input
+                type="text"
+                value={email}
+                onChange={e => this.setState({ email: e.target.value })}
+              />
+            </div>
+            <div className="formfield">
+              <label>Phone number:</label>
+              <input
+                type="text"
+                value={phone}
+                onChange={e => this.setState({ phone: e.target.value })}
               />
             </div>
             <div>
