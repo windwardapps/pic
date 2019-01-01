@@ -89,7 +89,8 @@ class ShootViewSet(viewsets.ModelViewSet):
         return Shoot.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user = self.request.user
+        serializer.save(user=user, createdBy=user)
 
 
 class ImageViewSet(viewsets.ModelViewSet):
@@ -99,7 +100,7 @@ class ImageViewSet(viewsets.ModelViewSet):
         return Image.objects.filter(student_id=self.kwargs['student_pk'])
 
     def perform_create(self, serializer):
-        serializer.save(student_id=self.kwargs['student_pk'])
+        serializer.save(student_id=self.kwargs['student_pk'], createdBy=user)
 
 
 class ShareViewSet(mixins.CreateModelMixin,
@@ -117,7 +118,8 @@ class ShareViewSet(mixins.CreateModelMixin,
             nextWeek = datetime.today() + timedelta(weeks=1)
             share = Share.objects.create(
                 student_id=self.kwargs['student_pk'], url='abc.com/test',
-                expiresAt=nextWeek
+                expiresAt=nextWeek, 
+                createdBy=user
             )
 
         return share

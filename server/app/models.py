@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-_createdBy = models.CharField(max_length=50, null=True, blank=True)
+_createdBy = models.ForeignKey('User', null=True, blank=True, on_delete=models.CASCADE)
 _createdAt = models.DateTimeField(auto_now_add=True)
-_updatedBy = models.CharField(max_length=50, null=True, blank=True)
+_updatedBy = models.ForeignKey('User', null=True, blank=True, on_delete=models.CASCADE)
 _updatedAt = models.DateTimeField(auto_now=True)
 
 
