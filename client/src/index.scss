@@ -188,6 +188,10 @@ form {
   height: 100%;
 }
 
+.buttons button + button {
+  margin-left: 20px;
+}
+
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }

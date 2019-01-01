@@ -6,7 +6,7 @@ import axios from 'axios'
 import moment from 'moment'
 import ImageDetail from './ImageDetail'
 import { SaveState } from '../constants'
-import { getFilename } from '../util'
+import { getFilename, fixPrefix } from '../util'
 
 class Images extends Component {
   state = {
@@ -51,6 +51,26 @@ class Images extends Component {
     await axios.post(`/shoots/${shoot.id}/students/${student.id}/images/`, formData)
   }
 
+  onKeyDown = (e: KeyboardEvent, image) => {
+    const { images, history, match } = this.props
+    let index = images.indexOf(image)
+    if (e.code === 'ArrowLeft') {
+      index--
+      if (index < 0) {
+        index = images.length - 1
+      }
+    } else if (e.code === 'ArrowRight') {
+      index++
+      if (index > images.length - 1) {
+        index = 0
+      }
+    } else {
+      return
+    }
+    const newImage = images[index]
+    history.push(`${match.url}/${newImage.id}`)
+  }
+
   render() {
     const { shoot, student, images, match } = this.props
     const { files } = this.state
@@ -68,11 +88,14 @@ class Images extends Component {
                     New
                   </Link>
                 </div>
-                <div className="content list">
+                <div className="content images">
                   {images.map(img => (
-                    <Link key={img.id} className="item" to={`${match.url}/${img.id}`}>
-                      <span className="name">{getFilename(img)}</span>
-                      <span className="info">{moment(img.updatedAt).fromNow()}</span>
+                    <Link key={img.id} className="image" to={`${match.url}/${img.id}`}>
+                      <img src={fixPrefix(img.file)} />
+                      <div className="info">
+                        <div className="name">{getFilename(img)}</div>
+                        <div className="date">{moment(img.updatedAt).fromNow()}</div>
+                      </div>
                     </Link>
                   ))}
                 </div>
@@ -117,6 +140,7 @@ class Images extends Component {
                 shoot={shoot}
                 student={student}
                 image={images.find(img => img.id === Number(props.match.params.imageId))}
+                onKeyDown={this.onKeyDown}
               />
             )}
           />

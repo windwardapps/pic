@@ -104,7 +104,7 @@ class Image(models.Model):
     updatedAt = _updatedAt
 
     class Meta:
-        ordering = ('-updatedAt',)
+        ordering = ('updatedAt',)
 
     def __str__(self):
         return self.path

@@ -13,6 +13,9 @@ export function getFilename(img) {
 }
 
 export function fixPrefix(url) {
+  if (!url) {
+    return ''
+  }
   const tokens = url.split('/uploads/')
   const prefix = getBaseUrl()
   const path = tokens[1]

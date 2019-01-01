@@ -109,10 +109,11 @@ class Share extends Component {
                 </Portal>
               ) : null}
             </div>
-            <div>
+            <div className="buttons">
               <button disabled={saveState === SaveState.SAVING || !expiresAt} onClick={this.submit}>
                 {SaveStateLabel[saveState]}
               </button>
+              <button onClick={this.sendShareNotification}>Send Invitation Email</button>
             </div>
           </form>
         </div>

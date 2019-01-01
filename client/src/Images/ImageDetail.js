@@ -7,6 +7,18 @@ import Portal from '../Portal/Portal'
 import { getFilename, fixPrefix } from '../util'
 
 class ImageDetail extends Component {
+  componentDidMount() {
+    document.addEventListener('keydown', this.onKeyDown)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown)
+  }
+
+  onKeyDown = e => {
+    this.props.onKeyDown(e, this.props.image)
+  }
+
   render() {
     const { shoot, student, image, match } = this.props
     const { shootId, studentId } = match.params
