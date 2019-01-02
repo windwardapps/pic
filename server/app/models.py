@@ -115,7 +115,10 @@ class Image(models.Model):
         ordering = ('updatedAt',)
 
     def __str__(self):
-        return self.path
+        try:
+            return self.file.url
+        except ValueError:
+            return 'Image for {}'.format(self.student)
 
 
 class Share(models.Model):
