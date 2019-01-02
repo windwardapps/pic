@@ -1,13 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-_createdBy = models.ForeignKey('User', null=True, blank=True, on_delete=models.CASCADE)
 _createdAt = models.DateTimeField(auto_now_add=True)
-_updatedBy = models.ForeignKey('User', null=True, blank=True, on_delete=models.CASCADE)
 _updatedAt = models.DateTimeField(auto_now=True)
 
 
 class User(AbstractUser):
+    isParent = models.BooleanField(default=False)
 
     def data(self):
         return {
@@ -20,22 +19,23 @@ class User(AbstractUser):
 
 
 def logo_path(instance, filename):
-    return 'user_{0}/logo/{1}'.format(instance.user.id, filename)
+    return 'user_{0}/logo/{1}'.format(instance.createdBy.id, filename)
 
 
 def watermark_path(instance, filename):
-    return 'user_{0}/watermark/{1}'.format(instance.user.id, filename)
+    return 'user_{0}/watermark/{1}'.format(instance.createdBy.id, filename)
 
 
 class Brand(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     companyName = models.CharField(max_length=200)
     logoFile = models.FileField(upload_to=logo_path, null=True, blank=True)
     watermarkFile = models.FileField(
         upload_to=watermark_path, null=True, blank=True)
-    createdBy = _createdBy
+    createdBy = models.ForeignKey(
+        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='brandCreatedBy')
     createdAt = _createdAt
-    updatedBy = _updatedBy
+    updatedBy = models.ForeignKey(
+        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='brandUpdatedBy')
     updatedAt = _updatedAt
 
     def data(self):
@@ -61,11 +61,12 @@ class Brand(models.Model):
 
 
 class Shoot(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    createdBy = _createdBy
+    createdBy = models.ForeignKey(
+        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='shootCreatedBy')
     createdAt = _createdAt
-    updatedBy = _updatedBy
+    updatedBy = models.ForeignKey(
+        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='shootUpdatedBy')
     updatedAt = _updatedAt
 
     class Meta:
@@ -81,9 +82,11 @@ class Student(models.Model):
     lastName = models.CharField(max_length=200)
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
-    createdBy = _createdBy
+    createdBy = models.ForeignKey(
+        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='studentCreatedBy')
     createdAt = _createdAt
-    updatedBy = _updatedBy
+    updatedBy = models.ForeignKey(
+        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='studentUpdatedBy')
     updatedAt = _updatedAt
 
     class Meta:
@@ -94,15 +97,18 @@ class Student(models.Model):
 
 
 def shoot_path(instance, filename):
-    return 'user_{}/shoot_{}/student_{}/{}'.format(instance.student.shoot.user.id, instance.student.shoot.id, instance.student.id, filename)
+    return 'user_{}/shoot_{}/student_{}/{}'.format(instance.student.shoot.createdBy.id, instance.student.shoot.id, instance.student.id, filename)
 
 
 class Image(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, related_name='images')
     file = models.FileField(upload_to=shoot_path, null=True, blank=True)
-    createdBy = _createdBy
+    createdBy = models.ForeignKey(
+        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='imageCreatedBy')
     createdAt = _createdAt
-    updatedBy = _updatedBy
+    updatedBy = models.ForeignKey(
+        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='imageUpdatedBy')
     updatedAt = _updatedAt
 
     class Meta:
@@ -114,11 +120,13 @@ class Image(models.Model):
 
 class Share(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    url = models.URLField(null=True, blank=True)
+    url = models.CharField(max_length=50, null=True, blank=True)
     expiresAt = models.DateTimeField(null=True, blank=True)
-    createdBy = _createdBy
+    createdBy = models.ForeignKey(
+        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='shareCreatedBy')
     createdAt = _createdAt
-    updatedBy = _updatedBy
+    updatedBy = models.ForeignKey(
+        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='shareUpdatedBy')
     updatedAt = _updatedAt
 
     class Meta:
