@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import Group
 from django.http import JsonResponse, Http404
 from django.middleware.csrf import get_token
-from django.views.generic import View
 from rest_framework import viewsets, permissions, mixins
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -19,6 +18,8 @@ def login_response(request, user):
 
 
 class LoginView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
     def get(self, request):
         if not request.user.is_authenticated:
             return Response({'success': False})
@@ -36,24 +37,24 @@ class LoginView(APIView):
         return login_response(request, user)
 
 
-class BrandingView(View):
+class BrandingView(APIView):
 
     def get(self, request):
         try:
-            brand = Brand.objects.get(user=request.user)
+            brand = Brand.objects.get(createdBy=request.user)
         except Brand.DoesNotExist:
-            return JsonResponse({})
+            return Response({})
 
-        return JsonResponse(brand.data())
+        return Response(brand.data())
 
     def post(self, request):
-        brand, created = Brand.objects.get_or_create(user=request.user)
+        brand, created = Brand.objects.get_or_create(createdBy=request.user)
         form = BrandForm(request.POST, request.FILES, instance=brand)
         if form.is_valid():
             # file is saved
             form.save()
 
-        return JsonResponse(brand.data())
+        return Response(brand.data())
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -79,18 +80,19 @@ class StudentViewSet(viewsets.ModelViewSet):
         return Student.objects.filter(shoot_id=self.kwargs['shoot_pk'])
 
     def perform_create(self, serializer):
-        serializer.save(shoot_id=self.kwargs['shoot_pk'])
+        serializer.save(
+            shoot_id=self.kwargs['shoot_pk'], createdBy=self.request.user)
 
 
 class ShootViewSet(viewsets.ModelViewSet):
     serializer_class = ShootSerializer
 
     def get_queryset(self):
-        return Shoot.objects.filter(user=self.request.user)
+        return Shoot.objects.filter(createdBy=self.request.user)
 
     def perform_create(self, serializer):
         user = self.request.user
-        serializer.save(user=user, createdBy=user)
+        serializer.save(createdBy=user)
 
 
 class ImageViewSet(viewsets.ModelViewSet):
@@ -100,7 +102,8 @@ class ImageViewSet(viewsets.ModelViewSet):
         return Image.objects.filter(student_id=self.kwargs['student_pk'])
 
     def perform_create(self, serializer):
-        serializer.save(student_id=self.kwargs['student_pk'], createdBy=user)
+        serializer.save(
+            student_id=self.kwargs['student_pk'], createdBy=self.request.user)
 
 
 class ShareViewSet(mixins.CreateModelMixin,
@@ -118,8 +121,8 @@ class ShareViewSet(mixins.CreateModelMixin,
             nextWeek = datetime.today() + timedelta(weeks=1)
             share = Share.objects.create(
                 student_id=self.kwargs['student_pk'], url='abc.com/test',
-                expiresAt=nextWeek, 
-                createdBy=user
+                expiresAt=nextWeek,
+                createdBy=self.request.user
             )
 
         return share
