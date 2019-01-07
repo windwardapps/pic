@@ -6,7 +6,8 @@ from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponseBadRequest
 
-from app.models import User, Share, Student, Shoot
+from app_auth.models import User
+from app.models import Share, Student, Shoot
 from app.serializers import ShareSerializer, StudentSerializer, ShootSerializer, ImageSerializer
 
 

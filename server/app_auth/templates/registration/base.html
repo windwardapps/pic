@@ -1,0 +1,19 @@
+{% load static %}
+<html>
+  <head>
+    <title>Photos</title>
+    <link
+      href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="{% static 'registration/style.css' %}" />
+  </head>
+  <body>
+    <div class="nav">
+      <div class="content"><a href="/">Photos</a></div>
+    </div>
+
+    {% block content %} {% endblock %}
+  </body>
+</html>

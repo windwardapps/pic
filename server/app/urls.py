@@ -1,10 +1,8 @@
 from django.conf.urls import url, include
 from rest_framework_nested import routers
-from .views import LoginView, BrandingView, UserViewSet, GroupViewSet, StudentViewSet, ShootViewSet, ImageViewSet, ShareViewSet
+from .views import BrandingView, StudentViewSet, ShootViewSet, ImageViewSet, ShareViewSet
 
 router = routers.SimpleRouter()
-router.register(r'users', UserViewSet)
-router.register(r'groups', GroupViewSet)
 router.register(r'shoots', ShootViewSet, basename='shoot')
 router.register(r'students', ShootViewSet, basename='student')
 
@@ -16,10 +14,7 @@ student_router = routers.NestedSimpleRouter(
 student_router.register(r'images', ImageViewSet, base_name='student-images')
 student_router.register(r'share', ShareViewSet, base_name='student-share')
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    url(r'^api/login/$', LoginView.as_view()),
     url(r'^api/user/branding/$', BrandingView.as_view()),
     url(r'^api/', include(router.urls)),
     url(r'^api/', include(shoot_router.urls)),

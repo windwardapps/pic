@@ -1,21 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
 _createdAt = models.DateTimeField(auto_now_add=True)
 _updatedAt = models.DateTimeField(auto_now=True)
-
-
-class User(AbstractUser):
-    isParent = models.BooleanField(default=False)
-
-    def data(self):
-        return {
-            'id': self.id,
-            'email': self.email,
-            'username': self.username,
-            'firstName': self.first_name,
-            'lastName': self.last_name,
-        }
 
 
 def logo_path(instance, filename):
@@ -32,10 +18,10 @@ class Brand(models.Model):
     watermarkFile = models.FileField(
         upload_to=watermark_path, null=True, blank=True)
     createdBy = models.ForeignKey(
-        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='brandCreatedBy')
+        'app_auth.User', null=True, blank=True, on_delete=models.CASCADE, related_name='brandCreatedBy')
     createdAt = _createdAt
     updatedBy = models.ForeignKey(
-        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='brandUpdatedBy')
+        'app_auth.User', null=True, blank=True, on_delete=models.CASCADE, related_name='brandUpdatedBy')
     updatedAt = _updatedAt
 
     def data(self):
@@ -63,10 +49,10 @@ class Brand(models.Model):
 class Shoot(models.Model):
     name = models.CharField(max_length=200)
     createdBy = models.ForeignKey(
-        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='shootCreatedBy')
+        'app_auth.User', null=True, blank=True, on_delete=models.CASCADE, related_name='shootCreatedBy')
     createdAt = _createdAt
     updatedBy = models.ForeignKey(
-        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='shootUpdatedBy')
+        'app_auth.User', null=True, blank=True, on_delete=models.CASCADE, related_name='shootUpdatedBy')
     updatedAt = _updatedAt
 
     class Meta:
@@ -83,10 +69,10 @@ class Student(models.Model):
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
     createdBy = models.ForeignKey(
-        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='studentCreatedBy')
+        'app_auth.User', null=True, blank=True, on_delete=models.CASCADE, related_name='studentCreatedBy')
     createdAt = _createdAt
     updatedBy = models.ForeignKey(
-        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='studentUpdatedBy')
+        'app_auth.User', null=True, blank=True, on_delete=models.CASCADE, related_name='studentUpdatedBy')
     updatedAt = _updatedAt
 
     class Meta:
@@ -105,10 +91,10 @@ class Image(models.Model):
         Student, on_delete=models.CASCADE, related_name='images')
     file = models.FileField(upload_to=shoot_path, null=True, blank=True)
     createdBy = models.ForeignKey(
-        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='imageCreatedBy')
+        'app_auth.User', null=True, blank=True, on_delete=models.CASCADE, related_name='imageCreatedBy')
     createdAt = _createdAt
     updatedBy = models.ForeignKey(
-        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='imageUpdatedBy')
+        'app_auth.User', null=True, blank=True, on_delete=models.CASCADE, related_name='imageUpdatedBy')
     updatedAt = _updatedAt
 
     class Meta:
@@ -126,10 +112,10 @@ class Share(models.Model):
     url = models.CharField(max_length=50, null=True, blank=True)
     expiresAt = models.DateTimeField(null=True, blank=True)
     createdBy = models.ForeignKey(
-        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='shareCreatedBy')
+        'app_auth.User', null=True, blank=True, on_delete=models.CASCADE, related_name='shareCreatedBy')
     createdAt = _createdAt
     updatedBy = models.ForeignKey(
-        'User', null=True, blank=True, on_delete=models.CASCADE, related_name='shareUpdatedBy')
+        'app_auth.User', null=True, blank=True, on_delete=models.CASCADE, related_name='shareUpdatedBy')
     updatedAt = _updatedAt
 
     class Meta:

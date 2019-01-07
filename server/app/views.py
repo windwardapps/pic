@@ -1,40 +1,11 @@
 from datetime import datetime, timedelta
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import Group
-from django.http import JsonResponse, Http404
-from django.middleware.csrf import get_token
-from rest_framework import viewsets, permissions, mixins
+from rest_framework import viewsets, mixins
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 from .forms import BrandForm
-from .models import User, Shoot, Student, Image, Brand, Share
-from .serializers import UserSerializer, GroupSerializer, StudentSerializer, ShootSerializer, ImageSerializer, ShareSerializer
-
-
-def login_response(request, user):
-    token = get_token(request)
-    return Response({'success': True, 'user': user.data(), 'token': token})
-
-
-class LoginView(APIView):
-    permission_classes = (permissions.AllowAny,)
-
-    def get(self, request):
-        if not request.user.is_authenticated:
-            return Response({'success': False})
-
-        return login_response(request, request.user)
-
-    def post(self, request):
-        email = request.data['email']
-        password = request.data['password']
-        user = authenticate(request, username=email, password=password)
-        if user is None:
-            return Response({'success': False})
-
-        login(request, user)
-        return login_response(request, user)
+from .models import Shoot, Student, Image, Brand, Share
+from .serializers import StudentSerializer, ShootSerializer, ImageSerializer, ShareSerializer
 
 
 class BrandingView(APIView):
@@ -55,22 +26,6 @@ class BrandingView(APIView):
             form.save()
 
         return Response(brand.data())
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-
-
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
 
 
 class StudentViewSet(viewsets.ModelViewSet):

@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'app_auth.apps.AuthConfig',
     'app.apps.AppConfig',
     'parent_app.apps.ParentAppConfig',
     'django.contrib.admin',
@@ -123,7 +124,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'app.User'
+AUTH_USER_MODEL = 'app_auth.User'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
