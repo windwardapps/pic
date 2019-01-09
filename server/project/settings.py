@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'app_auth.apps.AuthConfig',
     'app.apps.AppConfig',
     'parent_app.apps.ParentAppConfig',
+    'website.apps.WebsiteConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
