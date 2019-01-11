@@ -16,7 +16,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const res = await axios.get('/login/')
+    const res = await axios.get('/session/')
     const { success, user, token } = res.data
     if (success) {
       window.__user = user

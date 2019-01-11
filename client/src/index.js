@@ -5,7 +5,11 @@ import App from './App/App'
 
 import './index.scss'
 
-axios.defaults.baseURL = 'http://localhost:8000/api'
-axios.defaults.withCredentials = true
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:8000/api'
+  axios.defaults.withCredentials = true
+} else {
+  axios.defaults.baseURL = '/api'
+}
 
 ReactDOM.render(<App />, document.getElementById('root'))

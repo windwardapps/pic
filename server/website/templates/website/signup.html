@@ -1,0 +1,22 @@
+{% extends "website/base.html" %} {% load static %} {% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'website/login.css' %}"
+/>
+<div class="form-wrapper">
+  <div class="box-wrapper">
+    <h1>Sign up</h1>
+    <div class="box">
+      <form action="/signup/" method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Create Account</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

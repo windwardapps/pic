@@ -1,0 +1,29 @@
+.form-wrapper {
+  height: calc(100vh - 55px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box-wrapper {
+  max-width: 750px;
+}
+.box {
+  padding: 50px;
+  border: 1px solid #eee;
+  border-radius: 3px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+input {
+  width: 250px;
+}
+label {
+  width: 80px;
+  display: inline-block;
+}
+button {
+  display: block;
+  width: 100%;
+}

@@ -1,0 +1,29 @@
+.hero {
+  height: 85vh;
+  background-image: url(https://cdn.zenfolio.net/cdn2/pub/t817pyzmshcb/0/null/m/hlgnw6sm3ab9gg-l_rzh/s/v-3/p1013831260-6.jpg?ts=7&tk=R3fmmZ-W7LiMNEg83dU8KRQaimAHEysD1hJ-eT88j_XwvVTrlNE_-H12J54ChAfshAGxyFUFYsNF84uBx_RPXQ==&v=2&visitor=numy8fU81bfNe6WGZrIXAY3vZpsAAAAAxGzkcqv6QGAX&auth=exp=1547251199~acl=%2Fcdn2%2Fpub%2Ft817pyzmshcb%2F%2A~hmac=010c087a1a6ea19a0c5ea21f6a063b4b);
+  background-size: cover;
+  color: #fff;
+}
+.hero .container {
+  height: 80%;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+h1 {
+  font-weight: 200;
+}
+.hero h1 {
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 40px;
+}
+.lightgray {
+  color: #bbb;
+}
+.section {
+  border-bottom: 1px solid #eee;
+}
+.section .container {
+  padding: 150px 20px;
+}
