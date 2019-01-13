@@ -1,11 +1,9 @@
 .form-wrapper {
   height: calc(100vh - 55px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .box-wrapper {
-  max-width: 750px;
+  max-width: 400px;
+  margin: 8vh auto 0;
 }
 .box {
   padding: 50px;
@@ -17,7 +15,7 @@ h1 {
   margin-bottom: 30px;
 }
 input {
-  width: 250px;
+  width: 100%;
 }
 label {
   width: 80px;
